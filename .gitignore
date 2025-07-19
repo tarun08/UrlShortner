@@ -52,3 +52,8 @@ CodeCoverage/
 *.VisualState.xml
 TestResult.xml
 nunit-*.xml
+/UrlShortner/.vs/UrlShortner/CopilotIndices/17.13.431.34963
+/UrlShortner/.vs/UrlShortner/FileContentIndex
+/UrlShortner/.vs/UrlShortner/v17
+/UrlShortner/.vs/UrlShortner/config
+*.user
