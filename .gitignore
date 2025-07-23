@@ -57,3 +57,4 @@ nunit-*.xml
 /UrlShortner/.vs/UrlShortner/v17
 /UrlShortner/.vs/UrlShortner/config
 *.user
+/UrlShortner/.vs/UrlShortner/DesignTimeBuild

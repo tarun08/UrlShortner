@@ -1,11 +1,18 @@
-﻿using System.Security.Cryptography;
+﻿using MongoDB.Driver;
+using System.Security.Cryptography;
 using System.Text;
+using UrlShortnerService.Models;
 
 namespace UrlShortnerService.Services
 {
     public class UrlShortnerService : IUrlShortnerService
     {
         private Dictionary<string, string> urlMap = new Dictionary<string, string>();
+        private readonly IMongoCollection<ShortUrl> _collection;
+        public UrlShortnerService(IMongoDatabase database) 
+        {
+            _collection = database.GetCollection<ShortUrl>("ShortUrl");
+        }
         public string CreateShortUrl(Models.UrlShortenerRequest urlShortenerRequest)
         {
             if (urlShortenerRequest.CustomName != null)
@@ -17,18 +24,38 @@ namespace UrlShortnerService.Services
                 urlMap[urlShortenerRequest.CustomName] = urlShortenerRequest.LongUrl;
                 return urlShortenerRequest.CustomName;
             }
-            
-            string hash = ComputeSha256Hash(urlShortenerRequest.LongUrl);
-            string shortUrlCode = GetBase64String(hash).Substring(0, 6);
 
+            string shortUrlCode = string.Empty;
+            while (shortUrlCode == string.Empty || urlMap.ContainsKey(shortUrlCode))
+            {
+                string hash = ComputeSha256Hash(urlShortenerRequest.LongUrl + Guid.NewGuid().ToString());
+                shortUrlCode = GetBase64String(hash).Substring(0, 6);
+            }
+            
             urlMap.Add(shortUrlCode, urlShortenerRequest.LongUrl);
+            ShortUrl url = new ShortUrl()
+            {
+                ShortCode = shortUrlCode,
+                LongUrl = urlShortenerRequest.LongUrl,
+                CreatedAt = urlShortenerRequest.CreatedOn,
+                ExpiryDate = urlShortenerRequest.ExpiryDate
+            };
+            _collection.InsertOne(url);
 
             return shortUrlCode;
         }
 
-        public string GetLongUrl(string shortUrl)
+        public string GetLongUrl(string shortCode)
         {
-            urlMap.TryGetValue(shortUrl, out string? longUrl);
+            urlMap.TryGetValue(shortCode, out string? longUrl);
+
+            if (longUrl == null)
+            {
+                var filter = Builders<ShortUrl>.Filter.Eq(s => s.ShortCode, shortCode);
+                return _collection.Find<ShortUrl>(filter).First().LongUrl;
+            }
+               
+
             return longUrl ?? throw new KeyNotFoundException("Short URL not found.");
         }
 
@@ -53,7 +80,5 @@ namespace UrlShortnerService.Services
 
             return base64Encoded.ToString();
         }
-
-
     }
 }

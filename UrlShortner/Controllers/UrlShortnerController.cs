@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using UrlShortnerService.Models;
 using UrlShortnerService.Services;
-using static UrlShortnerService.Models;
 
 namespace UrlShortnerService.Controllers;
 
@@ -36,6 +36,6 @@ public class UrlShortnerController : ControllerBase
 
         _logger.LogInformation("Short URL created: {ShortUrl}", shortUrl);
 
-        return new OkObjectResult($"http://localhost:5172/UrlShortnerController/{shortUrl}");
+        return new OkObjectResult($"{shortUrl}");
     }
 }

@@ -1,4 +1,5 @@
-﻿using static UrlShortnerService.Models;
+﻿
+using UrlShortnerService.Models;
 
 namespace UrlShortnerService.Services
 {
