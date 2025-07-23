@@ -7,6 +7,6 @@ namespace UrlShortnerService.Services
     {
         public string CreateShortUrl(UrlShortenerRequest urlShortenerRequest);
 
-        public string GetLongUrl(string shortUrl);
+        public string? GetLongUrl(string shortUrl);
     }
 }

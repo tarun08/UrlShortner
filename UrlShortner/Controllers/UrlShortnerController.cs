@@ -23,8 +23,15 @@ public class UrlShortnerController : ControllerBase
     [HttpGet(Name = "{shortUrl}")]
     public OkObjectResult Get(string shortUrl)
     {
-        string longUrl = _urlShortnerService.GetLongUrl(shortUrl);
-        return new OkObjectResult(longUrl);
+        try
+        {
+            string? longUrl = _urlShortnerService.GetLongUrl(shortUrl);
+            return new OkObjectResult(longUrl);
+        }
+        catch(Exception ex)
+        {
+            return new OkObjectResult(ex.Message);
+        }
     }
 
     [HttpPost(Name = "CreateShortUrl")]
@@ -32,10 +39,18 @@ public class UrlShortnerController : ControllerBase
     {
         _logger.LogInformation("Creating short URL for: {LongUrl}", urlShortenerRequest.LongUrl);
 
-        string shortUrl = _urlShortnerService.CreateShortUrl(urlShortenerRequest);
+        try
+        {
+            string shortUrl = _urlShortnerService.CreateShortUrl(urlShortenerRequest);
 
-        _logger.LogInformation("Short URL created: {ShortUrl}", shortUrl);
+            _logger.LogInformation("Short URL created: {ShortUrl}", shortUrl);
 
-        return new OkObjectResult($"{shortUrl}");
+            return new OkObjectResult($"{shortUrl}");
+        }
+        catch (Exception ex)
+        {
+            return new OkObjectResult(ex.Message);
+        }
+
     }
 }
