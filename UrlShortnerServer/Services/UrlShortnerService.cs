@@ -48,7 +48,7 @@ namespace UrlShortnerService.Services
                 CreatedAt = urlShortenerRequest.CreatedOn,
                 ExpiryDate = urlShortenerRequest.ExpiryDate
             };
-            _collection.InsertOne(url);
+            _collection.InsertOneAsync(url);
 
             return shortUrlCode;
         }
@@ -60,7 +60,7 @@ namespace UrlShortnerService.Services
             if (longUrl == null)
             {
                 var filter = Builders<ShortUrl>.Filter.Eq(s => s.ShortCode, shortCode);
-                return _collection.Find<ShortUrl>(filter)?.FirstOrDefault()?.LongUrl;
+                return _collection.FindAsync<ShortUrl>(filter).Result?.FirstOrDefault()?.LongUrl;
             }
             return longUrl;
         }
