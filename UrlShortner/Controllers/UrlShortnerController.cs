@@ -45,7 +45,7 @@ public class UrlShortnerController : ControllerBase
 
             _logger.LogInformation("Short URL created: {ShortUrl}", shortUrl);
 
-            return new OkObjectResult($"{shortUrl}");
+            return new OkObjectResult($"https://localhost:7100/{shortUrl}");
         }
         catch (Exception ex)
         {

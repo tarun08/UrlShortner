@@ -27,11 +27,16 @@ namespace UrlShortnerService.Services
                 shortUrlCode = urlShortenerRequest.CustomName;
             }
 
-            while (string.IsNullOrWhiteSpace(urlShortenerRequest.CustomName) && shortCodeExists(shortUrlCode))
+            if (string.IsNullOrWhiteSpace(urlShortenerRequest.CustomName))
             {
-                string hash = ComputeSha256Hash(urlShortenerRequest.LongUrl + Guid.NewGuid().ToString());
-                shortUrlCode = GetBase64String(hash).Substring(0, 6);
+                while (string.IsNullOrWhiteSpace(shortUrlCode) ||
+                    (!string.IsNullOrWhiteSpace(shortUrlCode) && shortCodeExists(shortUrlCode)))
+                {
+                    string hash = ComputeSha256Hash(urlShortenerRequest.LongUrl + Guid.NewGuid().ToString());
+                    shortUrlCode = GetBase64String(hash).Substring(0, 6);
+                }
             }
+            
 
             if (!urlMap.TryAdd(shortUrlCode, urlShortenerRequest.LongUrl))
                 throw new InvalidOperationException("Failed to add short code to cache.");
