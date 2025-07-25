@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.13.35818.85 d17.13
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrlShortnerService", "UrlShortnerService.csproj", "{E6C7215B-5FD0-4290-8D91-F3ACBD15448C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrlShortnerServer", ".\UrlShortnerServer\UrlShortnerService.csproj", "{E6C7215B-5FD0-4290-8D91-F3ACBD15448C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrlRedirectionService", "..\UrlRedirectionServer\UrlRedirectionService.csproj", "{C91AE981-5FCC-4C7B-9FFB-42854D0A6E39}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrlRedirectionService", ".\UrlRedirectionServer\UrlRedirectionService.csproj", "{C91AE981-5FCC-4C7B-9FFB-42854D0A6E39}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

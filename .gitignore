@@ -58,3 +58,9 @@ nunit-*.xml
 /UrlShortner/.vs/UrlShortner/config
 *.user
 /UrlShortner/.vs/UrlShortner/DesignTimeBuild
+/.vs
+/UrlShortnerServer/.vs/UrlShortner/CopilotIndices/17.13.431.34963
+/UrlShortnerServer/.vs/UrlShortner/DesignTimeBuild
+/UrlShortnerServer/.vs/UrlShortner/FileContentIndex
+/UrlShortnerServer/.vs/UrlShortner/v17
+/UrlShortnerServer/.vs
