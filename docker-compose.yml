@@ -5,11 +5,10 @@ services:
       context: ./UrlShortnerService
       dockerfile: Dockerfile
     ports:
-      - "7000:7000"
+      - "17000:17000"
     environment:
-      ASPNETCORE_URLS: http://+:7000
-      MongoDbSettings__ConnectionString: mongodb://admin:admin123@mongodb:27017
-      MongoDbSettings__DatabaseName: UrlShortner
+      ASPNETCORE_ENVIRONMENT: Docker
+      ASPNETCORE_URLS: http://+:17000
     depends_on:
       - mongodb
 
@@ -19,11 +18,10 @@ services:
       context: ./UrlRedirectionService
       dockerfile: Dockerfile
     ports:
-      - "8000:8000"
+      - "18000:18000"
     environment:
-      ASPNETCORE_URLS: http://+:8000
-      MongoDbSettings__ConnectionString: mongodb://admin:admin123@mongodb:27017
-      MongoDbSettings__DatabaseName: UrlShortner
+      ASPNETCORE_ENVIRONMENT: Docker
+      ASPNETCORE_URLS: http://+:18000
     depends_on:
       - mongodb
 

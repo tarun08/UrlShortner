@@ -3,6 +3,16 @@ using UrlShortnerService.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddSingleton(builder.Configuration);
+
+builder.Configuration.AddEnvironmentVariables();
+
+builder.Configuration
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
+    .AddEnvironmentVariables();
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAllOrigins",

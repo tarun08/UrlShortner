@@ -6,13 +6,23 @@ using System.Net.Http.Json;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddHttpClient();
 
+builder.Configuration.AddEnvironmentVariables();
+
+builder.Configuration
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
+    .AddEnvironmentVariables();
+
+builder.Services.AddSingleton(builder.Configuration);
+
 var app = builder.Build();
 
-app.MapGet("/{**catchAll}", async (HttpContext context, IHttpClientFactory httpClientFactory) =>
+app.MapGet("/{**catchAll}", async (HttpContext context, IHttpClientFactory httpClientFactory, IConfiguration configuration) =>
 {
     var catchAll = context.Request.RouteValues["catchAll"] as string ?? "";
 
-    var backendUrl = $"http://url-shortner-service:7000/UrlShortner?shortUrl={catchAll}";
+    var backendUrl = $"{configuration["UrlShortnerServerUrl"]}{catchAll}";
     var httpClient = httpClientFactory.CreateClient();
 
     try

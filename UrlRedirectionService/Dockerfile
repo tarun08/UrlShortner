@@ -18,8 +18,4 @@ WORKDIR /app
 # Copy published output
 COPY --from=build /app ./
 
-# Force ASP.NET Core to listen on port 7100
-ENV ASPNETCORE_URLS=http://+:8000
-EXPOSE 7100
-
 ENTRYPOINT ["dotnet", "UrlRedirectionService.dll"]

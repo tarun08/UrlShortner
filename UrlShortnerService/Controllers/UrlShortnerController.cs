@@ -11,13 +11,16 @@ public class UrlShortnerController : ControllerBase
 
     private readonly ILogger<UrlShortnerController> _logger;
     private readonly IUrlShortnerService _urlShortnerService;
+    private readonly IConfiguration _config;
 
     public UrlShortnerController(
         ILogger<UrlShortnerController> logger,
-        IUrlShortnerService urlShortnerService)
+        IUrlShortnerService urlShortnerService,
+        IConfiguration config)
     {
         _logger = logger;
         _urlShortnerService = urlShortnerService;
+        _config = config;
     }
 
     [HttpGet(Name = "{shortUrl}")]
@@ -45,7 +48,7 @@ public class UrlShortnerController : ControllerBase
 
             _logger.LogInformation("Short URL created: {ShortUrl}", shortUrl);
 
-            return Ok(new { shortUrl = $"http://localhost:8000/{shortUrl}" });
+            return Ok(new { shortUrl = $"{_config["UrlRedirectionServiceUrl"]}/{shortUrl}" });
         }
         catch (Exception ex)
         {
