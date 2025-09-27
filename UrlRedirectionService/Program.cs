@@ -12,7 +12,7 @@ app.MapGet("/{**catchAll}", async (HttpContext context, IHttpClientFactory httpC
 {
     var catchAll = context.Request.RouteValues["catchAll"] as string ?? "";
 
-    var backendUrl = $"http://localhost:7001/UrlShortner?shortUrl={catchAll}";
+    var backendUrl = $"http://url-shortner-service:7000/UrlShortner?shortUrl={catchAll}";
     var httpClient = httpClientFactory.CreateClient();
 
     try

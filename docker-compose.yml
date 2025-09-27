@@ -1,0 +1,42 @@
+services:
+  urlshortner:
+    container_name: url-shortner-service
+    build:
+      context: ./UrlShortnerService
+      dockerfile: Dockerfile
+    ports:
+      - "7000:7000"
+    environment:
+      ASPNETCORE_URLS: http://+:7000
+      MongoDbSettings__ConnectionString: mongodb://admin:admin123@mongodb:27017
+      MongoDbSettings__DatabaseName: UrlShortner
+    depends_on:
+      - mongodb
+
+  urlredirection:
+    container_name: url-redirection-service
+    build:
+      context: ./UrlRedirectionService
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      ASPNETCORE_URLS: http://+:8000
+      MongoDbSettings__ConnectionString: mongodb://admin:admin123@mongodb:27017
+      MongoDbSettings__DatabaseName: UrlShortner
+    depends_on:
+      - mongodb
+
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - "27018:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin123
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:

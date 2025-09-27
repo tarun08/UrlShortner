@@ -36,16 +36,21 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+app.UseDefaultFiles();    // looks for index.html
+app.UseStaticFiles();     // serves files from wwwroot
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
+app.MapControllers();
+
+app.MapFallbackToFile("index.html"); // for client-side routing
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-
-app.MapControllers();
 
 app.Run();

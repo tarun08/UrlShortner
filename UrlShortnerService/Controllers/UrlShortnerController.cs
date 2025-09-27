@@ -21,7 +21,7 @@ public class UrlShortnerController : ControllerBase
     }
 
     [HttpGet(Name = "{shortUrl}")]
-    public OkObjectResult Get(string shortUrl)
+    public IActionResult Get(string shortUrl)
     {
         try
         {
@@ -35,7 +35,7 @@ public class UrlShortnerController : ControllerBase
     }
 
     [HttpPost(Name = "CreateShortUrl")]
-    public OkObjectResult Post(UrlShortenerRequest urlShortenerRequest) 
+    public IActionResult Post(UrlShortenerRequest urlShortenerRequest) 
     {
         _logger.LogInformation("Creating short URL for: {LongUrl}", urlShortenerRequest.LongUrl);
 
@@ -45,12 +45,11 @@ public class UrlShortnerController : ControllerBase
 
             _logger.LogInformation("Short URL created: {ShortUrl}", shortUrl);
 
-            return new OkObjectResult($"https://localhost:7100/{shortUrl}");
+            return Ok(new { shortUrl = $"http://localhost:8000/{shortUrl}" });
         }
         catch (Exception ex)
         {
-            return new OkObjectResult(ex.Message);
+            return BadRequest(new { message = ex.Message });
         }
-
     }
 }
