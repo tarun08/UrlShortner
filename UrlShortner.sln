@@ -1,11 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35818.85 d17.13
+VisualStudioVersion = 17.13.35818.85
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrlShortnerService", ".\UrlShortnerService\UrlShortnerService.csproj", "{E6C7215B-5FD0-4290-8D91-F3ACBD15448C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrlShortnerService", "UrlShortnerService\UrlShortnerService.csproj", "{E6C7215B-5FD0-4290-8D91-F3ACBD15448C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrlRedirectionService", ".\UrlRedirectionService\UrlRedirectionService.csproj", "{C91AE981-5FCC-4C7B-9FFB-42854D0A6E39}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrlRedirectionService", "UrlRedirectionService\UrlRedirectionService.csproj", "{C91AE981-5FCC-4C7B-9FFB-42854D0A6E39}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
